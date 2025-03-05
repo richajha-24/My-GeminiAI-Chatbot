@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to right, #1d7efd, #8f6fff);
+            transition: background 0.3s ease-in-out;
+        }
+
+        /* Container */
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            width: 450px;
+            text-align: center;
+            position: relative;
+        }
+
+        /* Close Button (X) */
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        /* Title */
+        h2 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        /* Input Fields */
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: none;
+            border-bottom: 2px solid #ccc;
+            outline: none;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            border-color: #0072ff;
+        }
+
+        /* Checkbox & Label */
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .checkbox-container input {
+            margin-right: 8px;
+        }
+
+        /* Submit Button */
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            background: #1d7efd;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s ease-in-out;
+        }
+
+        button:hover {
+            background: #636bd6;
+        }
+
+        /* Forgot Password */
+        .forgot-password {
+            display: block;
+            margin-top: 10px;
+            color: #0072ff;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        /* Sign-in Link */
+        .sign-in {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .sign-in a {
+            color: #0072ff;
+            text-decoration: none;
+        }
+
+        .sign-in a:hover {
+            text-decoration: underline;
+        }
+
+        /* Dark Mode Toggle */
+        .toggle-dark-mode {
+            position: absolute;
+            top: -50px;
+            right: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        /* Dark Mode Styles */
+        .dark-mode {
+            background: #121212;
+        }
+
+        .dark-mode .container {
+            background: #1e1e1e;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+        }
+
+        .dark-mode h2 {
+            color: #ffffff;
+        }
+
+        .dark-mode input {
+            background: #333;
+            color: white;
+            border-bottom: 2px solid #555;
+        }
+
+        .dark-mode input:focus {
+            border-bottom: 2px solid #1d7efd;
+        }
+
+        .dark-mode button {
+            background: #1d7efd;
+        }
+
+        .dark-mode button:hover {
+            background: #8f6fff;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button id="toggle-dark-mode" class="toggle-dark-mode">Dark Mode</button>
+        <span class="close-btn">&times;</span>
+
+        <h2>Registration Form</h2>
+
+        <form id="register-form">
+            <input type="text" id="name" placeholder="Name" required>
+            <input type="email" id="email" placeholder="Email address" required>
+            <input type="text" id="phone" placeholder="Phone" required>
+
+            <div class="password-container">
+                <input type="password" id="password" placeholder="Password" required>
+            </div>
+
+            <div class="checkbox-container">
+                <input type="checkbox" id="remember-me" required>
+                <label for="remember-me">Remember me</label>
+            </div>
+
+            <button type="submit" id="register-btn">Register</button>
+            <a href="forgot-password.html" class="forgot-password"><b>Forgot Password?</b></a>
+
+            <p class="sign-in">Already have an account? <a href="index.html"><b>Sign in</b></a></p>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const toggleDarkModeBtn = document.getElementById("toggle-dark-mode");
+
+            
+            if (localStorage.getItem("darkMode") === "enabled") {
+                document.body.classList.add("dark-mode");
+            }
+
+            toggleDarkModeBtn.addEventListener("click", function () {
+                document.body.classList.toggle("dark-mode");
+
+               
+                if (document.body.classList.contains("dark-mode")) {
+                    localStorage.setItem("darkMode", "enabled");
+                } else {
+                    localStorage.setItem("darkMode", "disabled");
+                }
+            });
+
+            
+            document.getElementById("register-btn").addEventListener("click", function (event) {
+                event.preventDefault(); 
+
+                const name = document.getElementById("name").value.trim();
+                const email = document.getElementById("email").value.trim();
+                const phone = document.getElementById("phone").value.trim();
+                const password = document.getElementById("password").value.trim();
+
+                if (!/^[A-Za-z\s]+$/.test(name)) {
+                    alert("Name should not contain numbers or symbols.");
+                    return;
+                }
+                if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+                    alert("Please enter a valid email.");
+                    return;
+                }
+                if (!/^\d{10}$/.test(phone)) {
+                    alert("Phone number should be 10 digits.");
+                    return;
+                }
+                if (password.length < 6) {
+                    alert("Password must be at least 6 characters.");
+                    return;
+                }
+
+                window.location.href = "index.html";
+            });
+        });
+    </script>
+</body>
+</html>
